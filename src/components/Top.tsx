@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const Top = () => {
   const [isBlue, setIsBlue] = useState(true);
@@ -8,8 +8,8 @@ const Top = () => {
     setIsBlue(false);
   };
 
-  const handleMouseLeave = () => {
-    console.log("mouse leave");
+  const handleMouseOut = () => {
+    console.log("mouse out");
     setIsBlue(true);
   };
 
@@ -17,17 +17,17 @@ const Top = () => {
     <div className="top-0 flex flex-col translate-x-10 -translate-y-10 items-center justify-center">
       {isBlue ? (
         <img
-          src="LOGOBLUE.png"
+          src="LOGOBLUE.svg"
           onMouseOver={handleMouseOver}
           alt="blue logo"
-          className="top-0 flex flex-col translate-x-10 -translate-y-10 items-center justify-center"
+          className="top-0 flex flex-col object-contain translate-x-10 -translate-y-10 items-center justify-center"
         />
       ) : (
         <img
-          src="LOGORED.png"
-          onMouseLeave={handleMouseLeave}
+          src="LOGORED.svg"
+          onMouseOut={handleMouseOut}
           alt="red logo"
-          className="top-0 flex flex-col translate-x-10 -translate-y-10 items-center justify-center"
+          className="top-0 flex flex-col object-contain translate-x-10 -translate-y-10 items-center justify-center"
         />
       )}
     </div>

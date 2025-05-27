@@ -11,3 +11,21 @@
     @apply bg-gray-200 text-gray-900 font-jacquard;
   }
 } */
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  body {
+    @apply bg-white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+}
+
+/* Animation applied to sidebar */
+@layer components {
+  .sidebar-item {
+    @apply text-shadow-gray-900 text-lg px-4 py-2 rounded-xl hover:bg-black hover:text-green-600 transition-all transform hover:scale-105 hover:-translate-y-1;
+  }
+}
