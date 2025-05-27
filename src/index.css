@@ -1,1 +1,13 @@
+@font-face {
+  font-family: 'CustomFont';
+  src: url(src\assets\Jacquard_12_Charted\Jacquard12Charted-Regular.ttf) formate
+  ('truetype');
+}
+
 @import "tailwindcss";
+
+/* @layer base {
+  body {
+    @apply bg-gray-200 text-gray-900 font-jacquard;
+  }
+} */
