@@ -14,22 +14,14 @@ const Top = () => {
   };
 
   return (
-    <div className="top-0 flex flex-col translate-x-10 -translate-y-10 items-center justify-center">
-      {isBlue ? (
-        <img
-          src="LOGOBLUE.svg"
-          onMouseOver={handleMouseOver}
-          alt="blue logo"
-          className="top-0 flex flex-col object-contain translate-x-10 -translate-y-10 items-center justify-center"
-        />
-      ) : (
-        <img
-          src="LOGORED.svg"
-          onMouseOut={handleMouseOut}
-          alt="red logo"
-          className="top-0 flex flex-col object-contain translate-x-10 -translate-y-10 items-center justify-center"
-        />
-      )}
+    <div className="top-0 flex flex-col translate-x-10 -translate-y-10 items-center justify-center overflow-hidden">
+      <img
+        src={isBlue ? "/LOGOBLUE.svg" : "LOGORED.svg"}
+        onMouseOver={handleMouseOver}
+        onMouseOut={handleMouseOut}
+        alt="logo"
+        className="transition-all transform object-contain hover:scale-105 hover:-translate-y-1"
+      />
     </div>
   );
 };
