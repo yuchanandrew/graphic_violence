@@ -6,9 +6,7 @@ const FeaturedPage = () => {
   return (
     <>
       <div>
-        <Background />
         FeaturedPage
-        <Sidebar />
         <Card
           title="Camo Tee"
           description="A placeholder t-shirt. Lorem Ipsum."

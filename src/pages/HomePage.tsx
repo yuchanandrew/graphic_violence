@@ -7,12 +7,6 @@ import Card from "../components/Card";
 function HomePage() {
   return (
     <>
-      <div className="relative z-10">
-        <Background />
-      </div>
-      <div className="relative z-50">
-        <Sidebar />
-      </div>
       <div className="relative z-40">
         <Top />
       </div>
