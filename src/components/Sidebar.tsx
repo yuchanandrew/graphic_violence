@@ -15,14 +15,14 @@ const Sidebar = () => {
         </Link>
         <Link
           to="/featured-items"
-          className="sidebar-item text-gray-200 left-0 justify-center"
+          className="sidebar-item left-0 justify-center"
         >
           Featured Items
         </Link>
-        <Link to="/about-us" className="sidebar-item text-gray-200 left-0">
+        <Link to="/about-us" className="sidebar-item left-0">
           About Us
         </Link>
-        <Link to="/contact-us" className="sidebar-item text-gray-200 left-0">
+        <Link to="/contact-us" className="sidebar-item left-0">
           Contact Us
         </Link>
       </div>
