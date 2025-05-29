@@ -6,7 +6,7 @@ interface CardProps {
 
 function Card(props: CardProps) {
   return (
-    <div className="bg-white rounded-xl shadow-lg p-4 transition-all transform hover:scale-105 hover:-translate-y-1">
+    <div className="bg-white w-1/2 shadow-lg p-4 rounded-xl transition-all transform hover:scale-105 hover:-translate-y-1">
       <img
         src={props.image}
         alt={props.title}

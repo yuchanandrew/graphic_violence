@@ -1,11 +1,9 @@
-import Background from "../components/Background";
-import Sidebar from "../components/Sidebar";
 import Card from "../components/Card";
 
 const FeaturedPage = () => {
   return (
     <>
-      <div>
+      <div className="flex flex-col items-center justify-center">
         FeaturedPage
         <Card
           title="Camo Tee"

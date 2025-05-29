@@ -1,7 +1,5 @@
-import Sidebar from "../components/Sidebar";
 import Top from "../components/Top";
 import "../App.css";
-import Background from "../components/Background";
 import Card from "../components/Card";
 
 function HomePage() {
