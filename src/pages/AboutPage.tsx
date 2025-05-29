@@ -18,7 +18,7 @@ const AboutPage = () => {
       <div className="flex flex-col justify-center items-center">
         <div className="w-2/3 flex flex-col p-2">
           <h2 className="text-2xl text-gray-200 font-semibold p-6">About Us</h2>
-          <div className="grid grid-cols-2 gap-4 items-start min-h-[550px]">
+          <div className="grid grid-cols-2 gap-4 items-start min-h-[600px]">
             <ContactCard
               title="Andrew"
               description="Developer"

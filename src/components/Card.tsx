@@ -1,3 +1,6 @@
+import { motion } from "framer-motion";
+import { useState } from "react";
+
 interface CardProps {
   title: string;
   description: string;
@@ -5,8 +8,14 @@ interface CardProps {
 }
 
 function Card(props: CardProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div className="bg-white w-1/2 shadow-lg p-4 rounded-xl transition-all transform hover:scale-105 hover:-translate-y-1">
+    <motion.div
+      onMouseOver={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
+      className="flex flex-col items-center justify-center bg-white rounded-xl shadow-lg p-4 transition-all transform hover:scale-105 hover:-translate-y-1"
+    >
       <img
         src={props.image}
         alt={props.title}
@@ -14,7 +23,14 @@ function Card(props: CardProps) {
       />
       <h2 className="text-lg font-semibold mt-2">{props.title}</h2>
       <p className="text-gray-600 text-sm">{props.description}</p>
-    </div>
+      {isOpen && (
+        <motion.div className="flex items-center justify-center">
+          <button className="bg-green-600 text-gray-200 text-xl rounded-xl font-semibold p-2 mt-4 transition-all transform hover:bg-black hover:shadow-lg hover:shadow-green-600 hover:text-green-600 hover:scale-105 hover:-translate-y-1">
+            BUY NOW
+          </button>
+        </motion.div>
+      )}
+    </motion.div>
   );
 }
 
