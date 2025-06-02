@@ -14,7 +14,7 @@ const Top = () => {
   };
 
   return (
-    <div className="top-0 flex flex-col translate-x-10 -translate-y-10 items-center justify-center overflow-hidden">
+    <div className="top-0 flex flex-col translate-x-16 -translate-y-0 items-center justify-center overflow-hidden">
       <img
         src={isBlue ? "/LOGOBLUE.svg" : "LOGORED.svg"}
         onMouseOver={handleMouseOver}

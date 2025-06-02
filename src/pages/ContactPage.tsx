@@ -9,7 +9,9 @@ const ContactPage = () => {
       transition={{ duration: 1.2, ease: "easeInOut", damping: 25 }}
     >
       <div className="flex flex-col items-center justify-center">
-        <h2 className="text-gray-600 text-2xl font-semibold">Contact Page</h2>
+        <h2 className="text-gray-200 text-2xl font-semibold p-6 mt-2">
+          Contact Page
+        </h2>
       </div>
     </motion.div>
   );
