@@ -18,6 +18,9 @@ const AnimatedRoutes = () => {
         <Route path="/featured-items" element={<FeaturedPage />} />
         <Route path="/about-us" element={<AboutPage />} />
         <Route path="/contact-us" element={<ContactPage />} />
+
+        <Route path="/success" element={<HomePage />} />
+        <Route path="/cancel" element={<HomePage />} />
       </Route>
     </Routes>
   );
