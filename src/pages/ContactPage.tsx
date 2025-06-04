@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import ContactForm from "../components/ContactForm";
 
 const ContactPage = () => {
   return (
@@ -12,6 +13,7 @@ const ContactPage = () => {
         <h2 className="text-gray-200 text-2xl font-semibold p-6 mt-2">
           Have Something to Say?
         </h2>
+        <ContactForm />
       </div>
     </motion.div>
   );

@@ -23,10 +23,10 @@ const Sidebar = () => {
           className="fixed top-5 left-5 text-white z-50"
           onClick={toggleSidebar}
         >
-          <div className="flex flex-col bg-green-600 p-2 rounded space-y-1">
-            <div className="flex p-1 bg-black min-w-[30px] rounded"></div>
-            <div className="flex p-1 bg-black min-w-[30px] rounded"></div>
-            <div className="flex p-1 bg-black min-w-[30px] rounded"></div>
+          <div className="group flex flex-col bg-green-600 p-2 rounded-xl space-y-1 transition-all transform hover:scale-105 hover:-translate-y-1 hover:shadow-lg hover:shadow-green-600 hover:bg-white">
+            <div className="flex p-1 bg-black min-w-[30px] rounded group-hover:bg-green-600"></div>
+            <div className="flex p-1 bg-black min-w-[30px] rounded group-hover:bg-green-600"></div>
+            <div className="flex p-1 bg-black min-w-[30px] rounded group-hover:bg-green-600"></div>
           </div>
         </button>
         {isOpen && (

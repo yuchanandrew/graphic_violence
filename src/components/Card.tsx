@@ -26,7 +26,7 @@ function Card(props: CardProps) {
       {isOpen && (
         <motion.div className="flex items-center justify-center">
           <button className="bg-green-600 text-black text-xl rounded-xl font-semibold p-2 mt-4 transition-all transform hover:bg-black hover:shadow-lg hover:shadow-green-600 hover:text-green-600 hover:scale-105 hover:-translate-y-1">
-            BUY NOW
+            Add to Cart
           </button>
         </motion.div>
       )}
