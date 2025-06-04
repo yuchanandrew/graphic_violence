@@ -10,7 +10,7 @@ const ContactPage = () => {
     >
       <div className="flex flex-col items-center justify-center">
         <h2 className="text-gray-200 text-2xl font-semibold p-6 mt-2">
-          Contact Page
+          Have Something to Say?
         </h2>
       </div>
     </motion.div>

@@ -23,10 +23,10 @@ const Sidebar = () => {
           className="fixed top-5 left-5 text-white z-50"
           onClick={toggleSidebar}
         >
-          <div className="flex flex-col bg-gray-200 p-2 rounded-xl space-y-1">
-            <div className="flex p-1 bg-black min-w-[30px] rounded-xl"></div>
-            <div className="flex p-1 bg-black min-w-[30px] rounded-xl"></div>
-            <div className="flex p-1 bg-black min-w-[30px] rounded-xl"></div>
+          <div className="flex flex-col bg-green-600 p-2 rounded space-y-1">
+            <div className="flex p-1 bg-black min-w-[30px] rounded"></div>
+            <div className="flex p-1 bg-black min-w-[30px] rounded"></div>
+            <div className="flex p-1 bg-black min-w-[30px] rounded"></div>
           </div>
         </button>
         {isOpen && (
@@ -34,11 +34,11 @@ const Sidebar = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed left-0 h-screen w-64 p-6 overflow-y-auto md:flex flex-col items-center space-y-6 z-40 bg-green-600"
+            className="fixed left-0 h-screen w-64 p-6 overflow-y-auto md:flex flex-col items-center space-y-6 z-40 bg-gray-600"
           >
             <Link
               to="/"
-              className="side-item left-0 justify-center items-center"
+              className="side-item left-0 justify-center items-center mt-24"
             >
               <img
                 src="LOGOBLUE.svg"

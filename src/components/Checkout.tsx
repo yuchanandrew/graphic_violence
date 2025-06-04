@@ -1,5 +1,6 @@
 import React from "react";
 import Axios from "axios";
+import { FaCartShopping } from "react-icons/fa6";
 
 const Checkout = () => {
   const handleCheckout = async () => {
@@ -24,7 +25,7 @@ const Checkout = () => {
       onClick={handleCheckout}
       className="bg-green-600 text-black px-4 py-2 rounded-xl hover:bg-white hover:text-green-600 hover:shadow-lg hover:shadow-green-600 transition-all transform hover:scale-105 hover:-translate-y-1"
     >
-      Checkout
+      <FaCartShopping size={24} />
     </button>
   );
 };
