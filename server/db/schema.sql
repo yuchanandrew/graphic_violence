@@ -25,5 +25,10 @@ VALUES
 
 INSERT INTO inventory(name, description, price, image_url, count)
 VALUES
-('Juniper Shirt', 'Awesome shirt with cool design!', 24.99, '../../public/juniper_logo.png', 6),
+('Juniper Shirt', 'Awesome shirt with cool design!', 24.99, 'https://i.imgur.com/02uob4M.png', 6),
 ('Camo Shirt', 'Cool camo shirt!', 19.99, '../../public/camo_placeholder.jpeg', 3);
+
+-- Update query
+UPDATE inventory
+SET image_url = 'https://i.imgur.com/cfxKnIr.jpeg'
+WHERE id = 2;

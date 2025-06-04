@@ -9,7 +9,10 @@ const {getComments, getComment, createComment, getItems, getItem, buyItem} = req
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+}));
 
 // Establish the session-based middleware
 app.use(session({
@@ -30,13 +33,44 @@ app.get("/", (req, res) => {
     res.send("server is up");
 });
 
+app.get("/getItems", async(req, res) => {
+    const items = await getItems();
+    res.json(items);
+});
+
 // Getting the cart
-app.get("/cart", (req, res) => {
-    res.status(200).json({ cart: req.session.cart || [] });
+app.get("/cart", async(req, res) => {
+    const cart = req.session.cart || [];
+
+    if (cart.length > 0){
+        const populatedCart = await Promise.all(
+            cart.map(async(item) => {
+                const[result] = await getItem(item.itemId);
+                const product = result ? result[0] : null;
+
+                if (!product) {
+                    console.warn(`Item not found for itemId: ${item.itemId}`);
+                    return{
+                        ...item,
+                        name: "Unknown item"
+                    };
+                }
+                
+                return {
+                    ...item,
+                    name: product.name
+                };
+            })
+        );
+
+        res.status(200).json({cart: populatedCart});
+    } else {
+        res.status(200).json({cart: []});
+    }
 });
 
 // Adding to the cart
-app.post("/cart/add", (req, res) => {
+app.post("/cart-add", (req, res) => {
     const{ itemId, quantity } = req.body;
 
     // If session cart does not exist,
@@ -57,7 +91,7 @@ app.post("/cart/add", (req, res) => {
 });
 
 // Subtracting from cart
-app.post("/cart/subtract", (req, res) => {
+app.post("/cart-subtract", (req, res) => {
     const { itemId } = req.body;
 
     // Check if the item even exists
@@ -69,13 +103,13 @@ app.post("/cart/subtract", (req, res) => {
 
         // After subtracting one, if quantity is 0,
         if (existingItem.quantity === 0) {
-            req.session.cart = cart.filter(item => item.itemId !== itemId); // Keep all items that do not have itemId in cart
+            req.session.cart = req.session.cart.filter(item => item.itemId !== itemId); // Keep all items that do not have itemId in cart
         }
     }
 });
 
 // Remove an item completely from cart
-app.post("/cart/remove", (req, res) => {
+app.post("/cart-remove", (req, res) => {
     const { itemId } = req.body;
 
     // Check if cart is empty (probably unnecessary?? will check later)
@@ -96,7 +130,7 @@ app.post("/create-checkout-session", async(req, res) => {
         const { itemId, quantity } = req.body;
 
         // Get the actual item from id
-        const [result] = getItem(itemId);
+        const [result] = await getItem(itemId);
         const item = result[0];
         
 

@@ -1,5 +1,6 @@
-import Card from "../components/Card";
+// import Card from "../components/Card";
 import { motion } from "framer-motion";
+import Collection from "../components/Collection";
 
 const FeaturedPage = () => {
   return (
@@ -16,11 +17,9 @@ const FeaturedPage = () => {
             Featured Items
           </h2>
         </div>
-        <Card
-          title="Camo Tee"
-          description="A placeholder t-shirt. Lorem Ipsum."
-          image="/camo_placeholder.jpeg"
-        />
+        <div className="flex">
+          <Collection />
+        </div>
       </motion.div>
     </>
   );

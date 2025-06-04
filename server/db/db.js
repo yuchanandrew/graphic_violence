@@ -66,9 +66,18 @@ async function buyItem(id, quantity) {
     }
 }
 
-async function run() {
-    const result = await buyItem(1, 2);
-    console.log(result);
-}
+module.exports = {
+    getComment,
+    getComments,
+    createComment,
+    getItems,
+    getItem,
+    buyItem
+};
 
-run();
+// async function run() {
+//     const result = await buyItem(1, 2);
+//     console.log(result);
+// }
+
+// run();

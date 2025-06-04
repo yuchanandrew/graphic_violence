@@ -32,6 +32,7 @@ function HomePage() {
                   title="Camo Tee"
                   description="A placeholder t-shirt. Lorem Ipsum."
                   image="/camo_placeholder.jpeg"
+                  price="$20.99"
                 />
               </div>
             </div>
