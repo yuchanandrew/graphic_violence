@@ -4,22 +4,28 @@ interface CartItem {
   itemId: number;
   quantity: number;
   name: string;
+  price: string;
 }
 
 interface CartDropdownProps {
   cartItems: CartItem[];
+  cartTotal: number;
   onCheckout: () => void;
 }
 
-const CartDropdown = ({ cartItems, onCheckout }: CartDropdownProps) => {
+const CartDropdown = ({
+  cartItems,
+  cartTotal,
+  onCheckout,
+}: CartDropdownProps) => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="bg-white px-6 py-6 rounded-xl flex flex-col mt-2"
+      className="bg-white py-6 rounded-xl flex flex-col mt-2"
     >
-      <div className="flex flex-col text-black text-2xl font-semibold justify-start mb-4">
+      <div className="flex flex-col text-black text-2xl font-semibold mb-8">
         <h2>Cart</h2>
       </div>
 
@@ -28,11 +34,19 @@ const CartDropdown = ({ cartItems, onCheckout }: CartDropdownProps) => {
           {cartItems.map((cartItem) => (
             <div
               key={cartItem.itemId}
-              className="flex flex-col p-2 text-black justify-start items-start font-bold"
+              className="text-black font-bold grid grid-cols-2 gap-6 space-y-4 justify-items-start"
             >
-              <p>{cartItem.name}</p>
+              <div className="ml-4">
+                <p>{cartItem.name}</p>
+              </div>
+              <div className="justify-self-end mr-4">
+                <p>x {cartItem.quantity}</p>
+              </div>
             </div>
           ))}
+          <div>
+            <p className="text-black font-bold mt-4">Total: ${cartTotal}</p>
+          </div>
           <div>
             <button
               onClick={onCheckout}

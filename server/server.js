@@ -42,30 +42,41 @@ app.get("/getItems", async(req, res) => {
 app.get("/cart", async(req, res) => {
     const cart = req.session.cart || [];
 
+    console.log(cart);
+
     if (cart.length > 0){
         const populatedCart = await Promise.all(
             cart.map(async(item) => {
                 const[result] = await getItem(item.itemId);
-                const product = result ? result[0] : null;
 
-                if (!product) {
-                    console.warn(`Item not found for itemId: ${item.itemId}`);
-                    return{
-                        ...item,
-                        name: "Unknown item"
-                    };
-                }
-                
+                console.log("result:", result.quantity);
+
+                // const product = result ? result[0] : null;
+
+                // if (!product) {
+                //     console.warn(`Item not found for itemId: ${item.name}`);
+                //     return{
+                //         ...item,
+                //         name: "Unknown item"
+                //     };
+                // }
+
                 return {
                     ...item,
-                    name: product.name
+                    name: result.name,
+                    price: result.price,
                 };
             })
         );
 
-        res.status(200).json({cart: populatedCart});
+        const total = parseFloat(populatedCart.reduce((acc, item) => {
+                return acc + item.price * item.quantity;
+            }, 0).toFixed(2)
+        );
+
+        res.status(200).json({cart: populatedCart, total});
     } else {
-        res.status(200).json({cart: []});
+        res.status(200).json({cart: [], total: 0});
     }
 });
 

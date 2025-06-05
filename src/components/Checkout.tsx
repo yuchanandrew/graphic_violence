@@ -7,7 +7,8 @@ axios.defaults.withCredentials = true;
 
 const Checkout = () => {
   const [cartOpen, setCartOpen] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
+  const [checkoutItems, setCheckoutItems] = useState([]);
+  const [checkoutTotal, setCheckoutTotal] = useState(0);
 
   const handleClickCart = async () => {
     setCartOpen(!cartOpen);
@@ -17,7 +18,8 @@ const Checkout = () => {
     const fetchCart = async () => {
       try {
         const response = await axios.get("http://localhost:3000/cart");
-        setCartItems(response.data.cart);
+        setCheckoutItems(response.data.cart);
+        setCheckoutTotal(response.data.total);
 
         console.log(response.data);
       } catch (error) {
@@ -53,8 +55,14 @@ const Checkout = () => {
       >
         <FaCartShopping size={24} />
       </button>
+
+      {/*This is where we call cartItems*/}
       {cartOpen && (
-        <CartDropdown cartItems={cartItems} onCheckout={handleCheckout} />
+        <CartDropdown
+          cartItems={checkoutItems}
+          cartTotal={checkoutTotal}
+          onCheckout={handleCheckout}
+        />
       )}
     </div>
   );

@@ -36,7 +36,7 @@ function Card({ id, title, description, price, image }: CardProps) {
       />
       <h2 className="text-lg font-semibold mt-2">{title}</h2>
       <p className="text-gray-600 text-sm">{description}</p>
-      <p className="text-gray-600 text-sm">{price}</p>
+      <p className="text-gray-600 text-sm">${price}</p>
       {isOpen && (
         <motion.div className="flex items-center justify-center">
           <button
