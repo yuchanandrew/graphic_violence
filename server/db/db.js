@@ -51,18 +51,27 @@ async function getItem(id) {
 }
 
 async function buyItem(id, quantity) {
+    const[items] = await getItem(id);
+    const item = items[0];
+
+    if (!item) {
+        return { success: false, message: 'Item not found.'};
+    }
+    
+    if (item.count < quantity) {
+        return { success: false, message: `Not enough items. We only have ${item.count} in stock for ${item.name}.`}
+    }
+
     const [result] = await pool.query(`
         UPDATE inventory
         SET count = count - ?
         WHERE id = ? AND count >= ?;
     `, [quantity, id, quantity]);
 
-    const[item] = await getItem(id);
-
     if (result.affectedRows === 1) {
         return { success: true, message: 'Purchase successful!'};
     } else {
-        return { success: false, message: `Not enough items. We only have ${item.count} in stock for ${item.name}.`};
+        return { success: false, message: 'Failed to update inventory'};
     }
 }
 

@@ -8,6 +8,48 @@ const session = require('express-session');
 const {getComments, getComment, createComment, getItems, getItem, buyItem} = require('./db/db.js');
 
 const app = express();
+const stripe = require('stripe')(process.env.STRIPE_SK);
+
+// Webhook post request (happens in Stripe internally)
+app.post("/webhook", express.raw({ type: 'application/json' }), async (req, res) => {
+    console.log("Webhook has been hit!");
+    const signature = req.headers['stripe-signature'];
+    console.log("Signature:", signature);
+
+    let event;
+    try {
+        event = stripe.webhooks.constructEvent(req.body, signature, process.env.STRIPE_WHSEC);
+    } catch (err) {
+        console.log(`Webhook signature verification failed.`, err.message);
+        return res.sendStatus(400);
+    }
+
+    // i.e. upon completion of checkout session...
+    if (event.type === 'checkout.session.completed') {
+        const stripe_session = event.data.object;
+
+        console.log("Webhook metadata received:", stripe_session.metadata);
+
+        console.log('Payment completed: ', stripe_session);
+
+        try {
+            const cart = JSON.parse(stripe_session.metadata.cart);
+
+            for(const item of cart) {
+                const itemId = item.itemId;
+                const quantity = parseInt(item.quantity, 10);
+
+                const result = await buyItem(itemId, quantity);
+                console.log("buyItem result:", result.message);
+            }
+        } catch (error) {
+            console.log('Error updating inventory: ', error);
+        }
+    }
+
+    res.status(200).send('Received webhook');
+});
+
 app.use(express.json());
 app.use(cors({
     origin: 'http://localhost:5173',
@@ -20,8 +62,6 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
 }));
-
-const stripe = require('stripe')(process.env.STRIPE_SK);
 
 // // Temporary database of items
 // const storeItems = new Map([
@@ -138,40 +178,45 @@ app.post("/cart-remove", (req, res) => {
 app.post("/create-checkout-session", async(req, res) => {
     try {
         // Get the item's id and quantity from request body
-        const { itemId, quantity } = req.body;
+        const cart = req.session.cart;
+        console.log("cart:", cart);
 
-        // Get the actual item from id
-        const [result] = await getItem(itemId);
-        const item = result[0];
+        const line_items_array = await Promise.all(
+            cart.map(async (element) => {
+                const result = await getItem(element.itemId);
+                console.log("result in promise:", result);
+
+                return {
+                    price_data: {
+                        currency: "usd",
+                        product_data: {
+                            name: result[0].name,
+                        },
+                        unit_amount: Math.round(result[0].price * 100),
+                    },
+                    quantity: element.quantity,
+                };
+            })
+        );
+
+        console.log("Metadata cart stringified:", JSON.stringify(cart));
         
 
         // Create new stripe checkout session
         const stripe_session = await stripe.checkout.sessions.create({
             payment_method_types:["card"],
             mode: "payment",
-            line_items: [
-                {
-                    price_data: {
-                        currency: "usd",
-                        product_data: {
-                            name: item.name,
-                        },
-                        unit_amount: item.price * 100, // Convert to cents
-                    },
-                    quantity: 1,
-                },
-            ],
+            line_items: line_items_array,
             success_url: "http://localhost:5173/success",
             cancel_url: "http://localhost:5173/cancel",
 
             // Store all metadata into the session metadata
             metadata: {
-                itemId: itemId,
-                quantity: quantity
+                cart: JSON.stringify(cart),
             }
         });
 
-        res.json({url: session.url});
+        res.json({url: stripe_session.url});
     } catch(error) {
         console.error("Error creating checkout session:", error);
         res.status(500).json({ error: "Something went wrong" });
@@ -182,36 +227,5 @@ app.post("/create-checkout-session", async(req, res) => {
 app.get("/success", (req, res) => {
     res.redirect("http://localhost:5173/");
 })
-
-// Webhook post request (happens in Stripe internally)
-app.post("/webhook", express.raw({ type: 'application/json' }), async (req, res) => {
-    const signature = req.headers['stripe-signature'];
-
-    let event;
-    try {
-        event = stripe.webhooks.constructEvent(req.body, signature, process.env.STRIPE_WHSEC);
-    } catch (err) {
-        console.log(`Webhook signature verification failed.`, err.message);
-        return res.sendStatus(400);
-    }
-
-    // i.e. upon completion of checkout session...
-    if (event.type === 'checkout.session.completed') {
-        const stripe_session = event.data.object;
-        console.log('Payment completed: ', stripe_session);
-
-        const itemId = stripe_session.metadata.itemId;
-        const quantity = parseInt(stripe_session.metadata.quantity, 10);
-
-        try {
-            const result = await buyItem(itemId, quantity);
-            console.log(result.message);
-        } catch (error) {
-            console.log('Error updating inventory: ', error);
-        }
-    }
-
-    res.status(200).send('Received webhook');
-});
 
 app.listen(3000, () => console.log("app is running"));
