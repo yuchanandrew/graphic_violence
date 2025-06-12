@@ -52,14 +52,13 @@ async function getItem(id) {
 
 async function buyItem(id, quantity) {
     const[items] = await getItem(id);
-    const item = items[0];
 
-    if (!item) {
+    if (!items) {
         return { success: false, message: 'Item not found.'};
     }
     
-    if (item.count < quantity) {
-        return { success: false, message: `Not enough items. We only have ${item.count} in stock for ${item.name}.`}
+    if (items.count < quantity) {
+        return { success: false, message: `Not enough items. We only have ${items.count} in stock for ${items.name}.`}
     }
 
     const [result] = await pool.query(`

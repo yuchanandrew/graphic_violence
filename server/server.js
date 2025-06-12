@@ -14,7 +14,7 @@ const stripe = require('stripe')(process.env.STRIPE_SK);
 app.post("/webhook", express.raw({ type: 'application/json' }), async (req, res) => {
     console.log("Webhook has been hit!");
     const signature = req.headers['stripe-signature'];
-    console.log("Signature:", signature);
+    // console.log("Signature:", signature);
 
     let event;
     try {
@@ -30,7 +30,7 @@ app.post("/webhook", express.raw({ type: 'application/json' }), async (req, res)
 
         console.log("Webhook metadata received:", stripe_session.metadata);
 
-        console.log('Payment completed: ', stripe_session);
+        // console.log('Payment completed: ', stripe_session);
 
         try {
             const cart = JSON.parse(stripe_session.metadata.cart);
@@ -41,6 +41,10 @@ app.post("/webhook", express.raw({ type: 'application/json' }), async (req, res)
 
                 const result = await buyItem(itemId, quantity);
                 console.log("buyItem result:", result.message);
+
+                // if (result.success === false) {
+                    
+                // }
             }
         } catch (error) {
             console.log('Error updating inventory: ', error);
@@ -172,6 +176,12 @@ app.post("/cart-remove", (req, res) => {
     req.session.cart = req.session.cart.filter(item => item.itemId !== itemId);
 
     res.status(200).json({ message: "Item removed from cart", cart: req.session.cart });
+});
+
+app.post("/cart-clear", (req, res) => {
+    console.log("Route hit!");
+    req.session.cart = [];
+    res.status(200).json({ message: "Cart cleared.", cart: req.session.cart });
 });
 
 // Create the checkout session

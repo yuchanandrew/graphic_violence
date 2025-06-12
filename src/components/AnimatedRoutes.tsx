@@ -7,6 +7,7 @@ import HomePage from "../pages/HomePage";
 import FeaturedPage from "../pages/FeaturedPage";
 import AboutPage from "../pages/AboutPage";
 import ContactPage from "../pages/ContactPage";
+import SuccessPage from "../pages/SuccessPage";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -19,7 +20,7 @@ const AnimatedRoutes = () => {
         <Route path="/about-us" element={<AboutPage />} />
         <Route path="/contact-us" element={<ContactPage />} />
 
-        <Route path="/success" element={<HomePage />} />
+        <Route path="/success" element={<SuccessPage />} />
         <Route path="/cancel" element={<HomePage />} />
       </Route>
     </Routes>
