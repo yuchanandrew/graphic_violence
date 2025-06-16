@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
-import { useState } from "react";
 import Checkout from "./Checkout";
 
 const Layout = () => {

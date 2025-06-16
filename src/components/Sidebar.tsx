@@ -4,10 +4,10 @@ import { useState } from "react";
 
 // import Background from "./Background";
 
-interface SidebarProps {
-  isOpen: boolean;
-  setIsOpen: (value: boolean) => void;
-}
+// interface SidebarProps {
+//   isOpen: boolean;
+//   setIsOpen: (value: boolean) => void;
+// }
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);

@@ -1,7 +1,5 @@
 import { motion } from "framer-motion";
 import { MdDelete } from "react-icons/md";
-import axios from "axios";
-import { useEffect, useState } from "react";
 
 interface CartItem {
   itemId: number;

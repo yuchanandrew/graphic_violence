@@ -1,5 +1,3 @@
-import React from "react";
-
 const ContactForm = () => {
   return (
     <div className="p-8 bg-white rounded-xl">
