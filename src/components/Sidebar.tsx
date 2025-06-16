@@ -34,7 +34,7 @@ const Sidebar = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed left-0 h-screen w-64 p-6 overflow-y-auto md:flex flex-col items-center space-y-6 z-40 bg-gray-600"
+            className="flex left-0 h-screen w-64 p-6 overflow-y-auto md:flex flex-col items-center space-y-6 z-40 bg-gray-600"
           >
             <Link
               to="/"
