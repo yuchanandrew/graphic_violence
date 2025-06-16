@@ -33,4 +33,7 @@ html {
   .sidebar-item {
     @apply text-gray-200 text-lg px-4 py-2 rounded-xl hover:bg-black hover:text-green-600 hover:shadow-lg hover:shadow-green-600 transition-all transform hover:scale-105 hover:-translate-y-1;
   }
+  .dot {
+    @apply bg-gray-200 min-h-[20px] min-w-[25px] rounded-full;
+  }
 }

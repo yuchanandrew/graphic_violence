@@ -1,4 +1,7 @@
 import { motion } from "framer-motion";
+import { MdDelete } from "react-icons/md";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 interface CartItem {
   itemId: number;
@@ -11,12 +14,18 @@ interface CartDropdownProps {
   cartItems: CartItem[];
   cartTotal: number;
   onCheckout: () => void;
+  onDelete: (itemId: number) => void;
+  onAdd: (itemId: number) => void;
+  onSubtract: (itemId: number) => void;
 }
 
 const CartDropdown = ({
   cartItems,
   cartTotal,
   onCheckout,
+  onDelete,
+  onAdd,
+  onSubtract,
 }: CartDropdownProps) => {
   return (
     <motion.div
@@ -34,13 +43,35 @@ const CartDropdown = ({
           {cartItems.map((cartItem) => (
             <div
               key={cartItem.itemId}
-              className="text-black font-bold grid grid-cols-2 gap-6 space-y-4 justify-items-start"
+              className="text-black font-bold grid grid-cols-3 gap-4 space-y-6 justify-center items-start"
             >
               <div className="ml-4">
                 <p>{cartItem.name}</p>
               </div>
-              <div className="justify-self-end mr-4">
-                <p>x {cartItem.quantity}</p>
+              <div className="justify-self-end">
+                <div className="grid grid-cols-3 gap-2 border-2 border-black rounded-2xl py-1 justify-center items-start">
+                  <button
+                    onClick={() => onSubtract(cartItem.itemId)}
+                    className="hover:bg-gray-200 rounded-2xl"
+                  >
+                    –
+                  </button>
+                  <p>x {cartItem.quantity}</p>
+                  <button
+                    onClick={() => onAdd(cartItem.itemId)}
+                    className="hover:bg-gray-200 rounded-2xl"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+              <div key={cartItem.itemId} className="justify-self-center">
+                <button
+                  onClick={() => onDelete(cartItem.itemId)}
+                  className="py-2 px-6 bg-red-600 text-white text-lg rounded-xl hover:bg-black hover:shadow-lg hover:shadow-red-600 hover:text-red-600 transition-all transform hover:scale-105 hover:-translate-y-1"
+                >
+                  <MdDelete />
+                </button>
               </div>
             </div>
           ))}
@@ -57,7 +88,7 @@ const CartDropdown = ({
           </div>
         </>
       ) : (
-        <div className="text-black">Cart empty</div>
+        <div className="text-black py-6 px-8">Cart empty</div>
       )}
     </motion.div>
   );

@@ -113,14 +113,19 @@ app.get("/cart", async(req, res) => {
             })
         );
 
+        const quantity_sum = parseFloat(populatedCart.reduce((acc, item) => {
+                return acc + item.quantity;
+            }, 0).toFixed(2)
+        );
+
         const total = parseFloat(populatedCart.reduce((acc, item) => {
                 return acc + item.price * item.quantity;
             }, 0).toFixed(2)
         );
 
-        res.status(200).json({cart: populatedCart, total});
+        res.status(200).json({cart: populatedCart, total, quantity_sum});
     } else {
-        res.status(200).json({cart: [], total: 0});
+        res.status(200).json({cart: [], total: 0, quantity_sum: 0});
     }
 });
 
@@ -149,6 +154,8 @@ app.post("/cart-add", (req, res) => {
 app.post("/cart-subtract", (req, res) => {
     const { itemId } = req.body;
 
+    console.log("Subtract route reached!");
+
     // Check if the item even exists
     const existingItem = req.session.cart.find(item => item.itemId === itemId);
 
@@ -159,7 +166,10 @@ app.post("/cart-subtract", (req, res) => {
         // After subtracting one, if quantity is 0,
         if (existingItem.quantity === 0) {
             req.session.cart = req.session.cart.filter(item => item.itemId !== itemId); // Keep all items that do not have itemId in cart
+            return res.status(200).json({ message: 'Removed from cart since quantity was 1', cart: req.session.cart});
         }
+
+        return res.status(200).json({ message: 'Successfully subtracted from cart', cart: req.session.cart });
     }
 });
 

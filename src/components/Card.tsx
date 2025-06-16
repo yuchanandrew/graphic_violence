@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import axios from "axios";
+import Alert from "@mui/material/Alert";
 
 axios.defaults.withCredentials = true;
 
@@ -14,12 +15,20 @@ interface CardProps {
 
 function Card({ id, title, description, price, image }: CardProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAlert, setIsAlert] = useState(false);
 
   const handleAddToCart = async () => {
     await axios.post("http://localhost:3000/cart-add", {
       itemId: id,
       quantity: 1,
     });
+
+    setIsAlert(true);
+
+    setTimeout(() => {
+      setIsAlert(false);
+    }, 3000);
+
     console.log("Successfully added to the cart!");
   };
 
@@ -47,6 +56,7 @@ function Card({ id, title, description, price, image }: CardProps) {
           </button>
         </motion.div>
       )}
+      {isAlert && <Alert severity="success">Added to cart!</Alert>}
     </motion.div>
   );
 }
