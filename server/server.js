@@ -56,7 +56,7 @@ app.post("/webhook", express.raw({ type: 'application/json' }), async (req, res)
 
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: 'https://sparkly-hotteok-085673.netlify.app/',
     credentials: true
 }));
 

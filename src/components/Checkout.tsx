@@ -13,7 +13,9 @@ const Checkout = () => {
 
   const fetchCart = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/cart");
+      const response = await axios.get(
+        "http://graphicviolence-production.up.railway.app/cart"
+      );
       setCheckoutItems(response.data.cart);
       setCheckoutQuantity(response.data.quantity_sum);
       setCheckoutTotal(response.data.total);
@@ -39,7 +41,7 @@ const Checkout = () => {
   const handleCheckout = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/create-checkout-session",
+        "http://graphicviolence-production.up.railway.app/create-checkout-session",
         {
           itemId: 1,
           // items: checkoutItems.map((item) => ({
@@ -59,9 +61,12 @@ const Checkout = () => {
 
   const handleDelete = async (itemId: number) => {
     try {
-      const response = await axios.post("http://localhost:3000/cart-remove", {
-        itemId: itemId,
-      });
+      const response = await axios.post(
+        "http://graphicviolence-production.up.railway.app/cart-remove",
+        {
+          itemId: itemId,
+        }
+      );
 
       await fetchCart();
       console.log("Item has been removed:", response);
@@ -72,10 +77,13 @@ const Checkout = () => {
 
   const handleAdd = async (itemId: number) => {
     try {
-      const response = await axios.post("http://localhost:3000/cart-add", {
-        itemId: itemId,
-        quantity: 1,
-      });
+      const response = await axios.post(
+        "http://graphicviolence-production.up.railway.app/cart-add",
+        {
+          itemId: itemId,
+          quantity: 1,
+        }
+      );
 
       await fetchCart();
       console.log("Added to cart", response);
@@ -86,9 +94,12 @@ const Checkout = () => {
 
   const handleSubtract = async (itemId: number) => {
     try {
-      const response = await axios.post("http://localhost:3000/cart-subtract", {
-        itemId: itemId,
-      });
+      const response = await axios.post(
+        "http://graphicviolence-production.up.railway.app/cart-subtract",
+        {
+          itemId: itemId,
+        }
+      );
 
       await fetchCart();
       console.log("Subtracted from cart", response);

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const SuccessPage = () => {
   useEffect(() => {
-    fetch("http://localhost:3000/cart-clear", {
+    fetch("http://graphicviolence-production.up.railway.app/cart-clear", {
       method: "POST",
       credentials: "include",
     });

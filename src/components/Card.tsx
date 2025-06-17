@@ -18,10 +18,13 @@ function Card({ id, title, description, price, image }: CardProps) {
   const [isAlert, setIsAlert] = useState(false);
 
   const handleAddToCart = async () => {
-    await axios.post("http://localhost:3000/cart-add", {
-      itemId: id,
-      quantity: 1,
-    });
+    await axios.post(
+      "http://graphicviolence-production.up.railway.app/cart-add",
+      {
+        itemId: id,
+        quantity: 1,
+      }
+    );
 
     setIsAlert(true);
 

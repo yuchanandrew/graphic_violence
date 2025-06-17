@@ -17,7 +17,9 @@ const Collection = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/getItems");
+        const res = await axios.get(
+          "http://graphicviolence-production.up.railway.app/getItems"
+        );
         setItems(res.data);
       } catch (error) {
         console.error("Error fetching data: ", error);
